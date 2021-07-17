@@ -3,6 +3,9 @@ class Furniture {
     constructor(jsonFurniture){
         jsonFurniture && Object.assign(this, jsonFurniture);
     }
+    getFormatedPrice(furniture){
+        return this.price / 100;
+    }
 }
 
 class FurnitureManager {
@@ -23,7 +26,7 @@ fetch("http://localhost:3000/api/furniture")
                                                                                 <div class="card-body">
                                                                                     <h5 class="card-title">${furniture.name}</h5>
                                                                                     <p class="card-text lead">${furniture.description}</p>
-                                                                                    <p class="card-text fw-bold">${furniture.price} €</p>
+                                                                                    <p class="card-text fw-bold">${furniture.getFormatedPrice()} €</p>
                                                                                     <a href="produit.html" class="btn btn-primary stretched-link">Détails</a>
                                                                                 </div>
                                                                         </div>
