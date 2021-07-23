@@ -8,20 +8,22 @@ class Furniture {
     }
 }
 
+const url = "http://localhost:3000/api/furniture";
+
 /* Appel de l'API, affichage de l'ensemble des articles */
-fetch("http://localhost:3000/api/furniture") 
+fetch(url) 
     .then( data => data.json()) /* récupération des données brutes que l'on transforme en json */
     .then( jsonListFurniture => {
         for(let jsonFurniture of jsonListFurniture) {
             let furniture = new Furniture(jsonFurniture);
-            document.querySelector("#furniture").innerHTML += `<div class="col-8 m-auto">
+            document.querySelector("#furniture").innerHTML += `<div class="col-lg-4 col-xxl-3">
                                                                     <div class="card bg-light text-center mb-4">
-                                                                        <img src="${furniture.imageUrl}" alt="" class="card-img-top" />
+                                                                        <img src="${furniture.imageUrl}" alt="image" class="card-img-top" />
                                                                             <div class="card-body">
                                                                                 <h5 class="card-title">${furniture.name}</h5>
                                                                                 <p class="card-text lead">${furniture.description}</p>
                                                                                 <p class="card-text fw-bold">${furniture.getFormatedPrice()} €</p>
-                                                                                <a href="produit.html${furniture._id}" class="btn btn-primary stretched-link">Sélectionner</a>
+                                                                                <a href="produits.html?id=${furniture._id}" class="btn btn-primary stretched-link">Détails</a>
                                                                             </div>
                                                                     </div>
                                                                 </div>`;
