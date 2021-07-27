@@ -36,11 +36,45 @@ const selectedId = urlSearchParams.get("id");
                                                                                             ${structureVarnish}
                                                                                             </ul>
                                                                                         </div>
-                                                                                            <a href="panier.html" class="btn btn-primary"><i class="fas fa-shopping-basket"></i>&nbsp;&nbsp;Ajouter au panier</a>
+                                                                                            <a href="panier.html" class="btn btn-primary" id="add-btn"><i class="fas fa-shopping-basket"></i>&nbsp;&nbsp;Ajouter au panier</a>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>`;
+                const ajoutPanier = document.querySelector("#add-btn");/* sélection du bouton pour ajouter au panier */
+                ajoutPanier.addEventListener("click", (event) => { /* ajout d'un événement au clic */
+                    event.preventDefault();
+                    let resumeProduct = { /* création d'un objet contenant les infos à envoyer au panier */
+                        produit:imageUrl,
+                        nom:name,
+                        reference:id,
+                        prix:price
+                    }
+                    let saveProduct = JSON.parse(localStorage.getItem("product"));/* Déclaration de la variable pour enregistrer dans le local storage et conversion des données au format json du local storage au format JavaScript */
+                    const confirmation = () => { /* message de confirmation d'envoi au panier */
+                        if(window.confirm(`${name} a bien été ajouté à votre panier. Cliquez sur OK pour le consulter, sinon cliquez sur annuler pour revenir à la page d'accueil`)) {
+                            window.location.href = "panier.html";
+                        } else {
+                            window.location.href="index.html";
+                        }
+                    }
+                    /* Fonction pour ajouter le produit au local storage */
+                    const ajoutProduit = () => {
+                        saveProduct.push(resumeProduct);
+                        localStorage.setItem("product", JSON.stringify(saveProduct));
+                    }
+                    if(saveProduct) { /* au cas où il y a des produits enregistrés dans le local storage */
+                        ajoutProduit();
+                        confirmation();
+                    } else { /* si il n'y a pas de produits enregistrés dans le local storage */
+                        saveProduct = [];
+                        ajoutProduit();
+                        confirmation();
+                    }
+                })
             })
         })
         .catch((erreur) => console.log(erreur));
+
+
+
 
