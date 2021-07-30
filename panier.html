@@ -64,29 +64,33 @@
             <div class="col">
                 <h3>Pour passer commande, merci de renseigner le formulaire ci-dessous</h3>
             </div>
-            <form class="row g-3">
+            <form class="row g-3" id="form">
                 <div class="col-md-6">
                   <label for="firstName" class="form-label">Prénom</label>
-                  <input type="text" class="form-control" id="firstName" required>
+                  <input type="text" class="form-control" id="firstName" placeholder="Eva" required>
                 </div>
                 <div class="col-md-6">
                   <label for="lastName" class="form-label">Nom</label>
-                  <input type="text" class="form-control" id="lastName" required>
+                  <input type="text" class="form-control" id="lastName" placeholder="Martin" required>
                 </div>
                 <div class="col-12">
                   <label for="address" class="form-label">Adresse</label>
-                  <input type="text" class="form-control" id="address" placeholder="12 rue Victor Hugo - bâtiment B" required>
+                  <textarea class="form-control" rows="2" id="address" placeholder="12 rue Victor Hugo - bâtiment B" minlength="8" maxlength="150" required></textarea>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-2">
+                  <label for="cp" class="form-label">Code postal</label>
+                  <input type="text" class="form-control" placeholder="3500" pattern="[0-9]{5}" id="cp" required>
+                </div>
+                <div class="col-md-5">
                     <label for="city" class="form-label">Ville</label>
-                    <input type="text" class="form-control" id="city" required>
+                    <input type="text" class="form-control" placeholder="Rennes" id="city" required>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-5">
                     <label for="mail" class="form-label">E-mail</label>
-                    <input type="email" class="form-control" id="mail" required>
+                    <input type="email" class="form-control" placeholder="eva.martin@email.fr" id="mail" required>
                   </div>
                 <div class="col-12 text-center">
-                  <button type="submit" class="btn btn-primary btn-lg">Commander</button>
+                  <button type="submit" class="btn btn-primary btn-lg" id="send">Commander</button>
                 </div>
               </form>
     </main>

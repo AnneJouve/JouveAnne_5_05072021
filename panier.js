@@ -58,3 +58,21 @@ const reducer = (accumulator, currentValue) => accumulator + currentValue;
 const montantTotal = totalPrice.reduce(reducer,0);
 /* Affichage du montant total */
 const affichageMontant = document.querySelector("#affichage-montant").innerHTML = montantTotal + " €";
+
+/* VALIDATION DU FORMULAIRE ET ENVOI DES DONNÉES */
+/* Utilisation de l'API de validation */
+/* Récupération du formulaire en ajoutant un événement au clic du bouton du formulaire */
+document.querySelector("#form button").addEventListener("click", function() {
+/* Vérification si l'ensemble des champs sont remplis */
+let valid = true;
+/* Boucle de vérification de l'ensemble des inputs */
+for(let input of document.querySelectorAll("#form input, #form textarea")) {
+    valid &= valid && input.reportValidity();
+    if(!valid){
+        break; /* Arrête de vérifier le formulaire si un champ n'est pas valide */
+    }
+}
+if(valid) {
+    alert("Votre commande a bien été envoyée");
+}
+});
