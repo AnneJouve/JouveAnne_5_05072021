@@ -48,7 +48,7 @@ promesse
 				let resumeProduct = { /* création d'un objet contenant les infos à envoyer au panier */
 					produit: imageUrl,
 					nom: name,
-					reference: id,
+					id: id,
 					prix: price
 				}
 				let saveProduct = JSON.parse(localStorage.getItem("product")); /* Déclaration de la variable pour enregistrer dans le local storage et conversion des données au format json du local storage au format JavaScript */

@@ -1,6 +1,5 @@
 /* Déclaration de la variable pour enregistrer dans le local storage et conversion des données au format json du local storage au format JavaScript */
 let saveProduct = JSON.parse(localStorage.getItem("product"));
-
 /* Affichage des produits du panier */
 const affichageProduits = document.querySelector("#affichage-produits");
 let structurePanier = [];
@@ -8,7 +7,7 @@ for(j = 0; j < saveProduct.length; j++) {
     structurePanier += `<tr>
                             <td class="col-2"><img src="${saveProduct[j].produit}" alt="" class="img-fluid"></td>
                             <td class="fw-bold text-center">${saveProduct[j].nom}</td>
-                            <td class="text-center">${saveProduct[j].reference}</td>
+                            <td class="text-center">${saveProduct[j].id}</td>
                             <td class="text-center">${saveProduct[j].prix} €</td>
                             <td class="text-center"><button type="button" class="btn btn-secondary" id="suppBtn"><i class="far fa-trash-alt"></i></button></td>
                         </tr>`;
@@ -62,7 +61,8 @@ const affichageMontant = document.querySelector("#affichage-montant").innerHTML 
 /* VALIDATION DU FORMULAIRE ET ENVOI DES DONNÉES */
 /* Utilisation de l'API de validation */
 /* Récupération du formulaire en ajoutant un événement au clic du bouton du formulaire */
-document.querySelector("#form button").addEventListener("click", function() {
+document.querySelector("#form button").addEventListener("click", function(event) {
+    event.preventDefault();
 /* Vérification si l'ensemble des champs sont remplis */
 let valid = true;
 /* Boucle de vérification de l'ensemble des inputs */
@@ -73,6 +73,47 @@ for(let input of document.querySelectorAll("#form input, #form textarea")) {
     }
 }
 if(valid) {
-    alert("Votre commande a bien été envoyée");
+    /* Récupération des données du formulaire dans un objet */
+    const contact = {
+        firstName: document.querySelector("#firstName").value,
+        lastName: document.querySelector("#lastName").value,
+        address: document.querySelector("#address").value,
+        city: document.querySelector("#city").value,
+        email: document.querySelector("#mail").value
+    };
+    /* Récupération de l'id des meubles sélectionnés */
+    const products = [];
+    for(let m = 0; m < saveProduct.length; m++) {
+        let reference = saveProduct[m].id;
+        products.push(reference);
+    }
+    /* Envoi des objets au local storage */
+    localStorage.setItem("contact", JSON.stringify(contact));
+    localStorage.setItem("products", JSON.stringify(products));
+    /* Création d'un objet à envoyer au serveur regroupant les produits et le formulaire */
+    const toSend = {
+        products,
+        contact,
+    };
+    /* Envoi au serveur */
+    const promiseSend = fetch("http://localhost:3000/api/furniture/order", {
+        method: "POST",
+        body: JSON.stringify(toSend),
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+    });
+    promiseSend
+    .then(response => {
+        return response.json();
+    })
+    .then(response2 => {
+        console.log(response2);
+    })
+    .catch(error => console.log(error))
+
+      /* Voir le résultat dans la console */
+    /*alert("Votre commande a bien été envoyée");*/
 }
 });
