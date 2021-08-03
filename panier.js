@@ -49,7 +49,6 @@ let totalPrice = [];
 /* Récupération des prix dans le panier */
 for(let l = 0; l < saveProduct.length; l++) {
     let prixPanier = saveProduct[l].prix;
-    /* Création d'un tableau pour le calcul */
     totalPrice.push(prixPanier);
 }
 /* Utilisation de la méthode reduce pour additionner les prix */
@@ -57,7 +56,8 @@ const reducer = (accumulator, currentValue) => accumulator + currentValue;
 const montantTotal = totalPrice.reduce(reducer,0);
 /* Affichage du montant total */
 const affichageMontant = document.querySelector("#affichage-montant").innerHTML = montantTotal + " €";
-
+/* Envoi du montant total au local storage */
+localStorage.setItem("montantTotal", JSON.stringify(montantTotal));
 /* VALIDATION DU FORMULAIRE ET ENVOI DES DONNÉES */
 /* Utilisation de l'API de validation */
 /* Récupération du formulaire en ajoutant un événement au clic du bouton du formulaire */
@@ -88,8 +88,8 @@ if(valid) {
         products.push(reference);
     }
     /* Envoi des objets au local storage */
-    localStorage.setItem("contact", JSON.stringify(contact));
-    localStorage.setItem("products", JSON.stringify(products));
+    /*localStorage.setItem("contact", JSON.stringify(contact));
+    localStorage.setItem("products", JSON.stringify(products));*/
     /* Création d'un objet à envoyer au serveur regroupant les produits et le formulaire */
     const toSend = {
         products,
@@ -109,7 +109,12 @@ if(valid) {
         return response.json();
     })
     .then(response2 => {
+        console.log("réponse2");
         console.log(response2);
+        /* Récupération de l'orderId de la réponse du serveur et envoie au local storage */
+        localStorage.setItem("responseId", response2.orderId);
+        /* Redirection vers la page de confirmation */
+        window.location = "confirmation.html";
     })
     .catch(error => console.log(error))
 
