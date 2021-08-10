@@ -13,36 +13,6 @@ for(j = 0; j < saveProduct.length; j++) {
                         </tr>`;
 }
 affichageProduits.innerHTML = structurePanier;
-
-/* Sélection des boutons supprimer un article */
-let boutonSupprimer = document.querySelectorAll("#suppBtn");
-for(let k = 0; k < boutonSupprimer.length; k++) {
-    boutonSupprimer[k].addEventListener("click", (event) => {
-        event.preventDefault();
-        /* Sélection de l'id du produit à supprimer */
-        let idSelection = saveProduct[k].reference;
-        /* Utilisation de la méthode filter pour sélectionner les éléments à garder et supprimer l'élément cliqué */
-        saveProduct = saveProduct.filter( element => element.reference !== idSelection);
-        /* Envoi de la nouvelle variable au local storage */
-        localStorage.setItem("product", JSON.stringify(saveProduct));
-        /* Rechargement de la page */
-        window.location.href = "panier.html";
-    })
-}
-
-/* VIDER ENTIÈREMENT LE PANIER */
-/* Sélection du bouton */
-const boutonSupprimerTotal = document.querySelector("#trash");
-/* Suppression de la clé product du local storage */
-boutonSupprimerTotal.addEventListener("click", (e) => {
-    e.preventDefault();
-    localStorage.removeItem("product");
-    /* Alerte confirmation */
-    alert("Voulez-vous vraiment vider votre panier ?");
-    /* Rechargement de la page */
-    window.location.href = "panier.html";
-})
-
 /* CALCUL ET AFFICHAGE DU MONTANT TOTAL */
 /* Céation d'une variable pour récupérer les prix des produits du panier */
 let totalPrice = [];
@@ -58,6 +28,35 @@ const montantTotal = totalPrice.reduce(reducer,0);
 const affichageMontant = document.querySelector("#affichage-montant").innerHTML = montantTotal + " €";
 /* Envoi du montant total au local storage */
 localStorage.setItem("montantTotal", JSON.stringify(montantTotal));
+/* VIDER ENTIÈREMENT LE PANIER */
+/* Sélection du bouton */
+const boutonSupprimerTotal = document.querySelector("#trash");
+/* Suppression de la clé product du local storage */
+boutonSupprimerTotal.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("product");
+    localStorage.removeItem("montantTotal");
+    /* Alerte confirmation */
+    alert("Voulez-vous vraiment vider votre panier ?");
+    /* Rechargement de la page */
+    window.location.href = "panier.html";
+})
+
+/* Sélection des boutons supprimer un article */
+let boutonSupprimer = document.querySelectorAll("#suppBtn");
+for(let k = 0; k < boutonSupprimer.length; k++) {
+    boutonSupprimer[k].addEventListener("click", (event) => {
+        event.preventDefault();
+        /* Sélection de l'id du produit à supprimer */
+        let idSelection = saveProduct[k].id;
+        /* Utilisation de la méthode filter pour sélectionner les éléments à garder et supprimer l'élément cliqué */
+        saveProduct = saveProduct.filter( element => element.id !== idSelection);
+        /* Envoi de la nouvelle variable au local storage */
+        localStorage.setItem("product", JSON.stringify(saveProduct));
+        /* Rechargement de la page */
+        window.location.href = "panier.html";
+    })
+}
 /* VALIDATION DU FORMULAIRE ET ENVOI DES DONNÉES */
 /* Utilisation de l'API de validation */
 /* Récupération du formulaire en ajoutant un événement au clic du bouton du formulaire */
@@ -87,9 +86,6 @@ if(valid) {
         let reference = saveProduct[m].id;
         products.push(reference);
     }
-    /* Envoi des objets au local storage */
-    /*localStorage.setItem("contact", JSON.stringify(contact));
-    localStorage.setItem("products", JSON.stringify(products));*/
     /* Création d'un objet à envoyer au serveur regroupant les produits et le formulaire */
     const toSend = {
         products,
@@ -117,8 +113,5 @@ if(valid) {
         window.location = "confirmation.html";
     })
     .catch(error => console.log(error))
-
-      /* Voir le résultat dans la console */
-    /*alert("Votre commande a bien été envoyée");*/
 }
 });
