@@ -1,7 +1,7 @@
-# Orinoco #
+# Bienvenue sur le repository du projet 5 de mon parcours "Développeur Web" OpenClassrooms #
 
-À rédiger
-This is the back end server for Project 5 of the Junior Web Developer path.
+_Objectif :_ construire un site e-commerce
+Pour visualiser le projet, merci de suivre les recommandations ci-dessous.
 
 ### Prerequisites ###
 

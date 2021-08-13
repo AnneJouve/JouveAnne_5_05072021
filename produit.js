@@ -9,7 +9,8 @@ if(selectedId != null) {
 promesse
 	.then((response) => {
 		const furnitureData = response.json(); /*Enregistrement dans une constante des données en json*/
-		furnitureData.then((meuble) => { /* Récupération des données exploitables dans un objet */
+		furnitureData
+		.then((meuble) => { /* Récupération des données exploitables dans un objet */
 			const id = meuble._id;
 			const description = meuble.description;
 			const imageUrl = meuble.imageUrl;
