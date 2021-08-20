@@ -1,6 +1,6 @@
 # Bienvenue sur le repository du projet 5 de mon parcours "Développeur Web" OpenClassrooms #
 
-_Objectif :_ construire un site e-commerce.
+_Objectif :_ construire un site e-commerce
 Pour visualiser le projet, merci de suivre les recommandations ci-dessous.
 
 ### Prerequisites ###
